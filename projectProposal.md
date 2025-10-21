@@ -4,7 +4,7 @@
 We need to develop a software that, given an image, it retrieves from the image dataset the most relevant images. We will develop this using convolutional neural networks, more specifically, fine-tuning the ResNet50 CNN with our self-constructed dataset, although we will consider adding more images to the dataset as the project progresses.
 
 ## Preliminary plan of work.
-
+We will perform fine-tuning on the ResNet50 CNN with our dataset. For that we will use the TensorFlow library, as well as numpy
 
 
 
