@@ -19,7 +19,7 @@ class BinaryFeatureExtractor(nn.Module):
     The forward method takes input data (an image), processes it through the model and layers,
     and returns the binary feature representation.
     """
-    def __init__(self, model_name='clip-ViT-B-32', num_of_hidden_layers=1, device='cpu', last_layer_dimension = 256):
+    def __init__(self, model_name='clip-ViT-B-32', num_of_hidden_layers=1, device='cpu', last_layer_dimension = 512):
         super(BinaryFeatureExtractor, self).__init__()
         
         # Seleccionar dispositivo: preferir MPS/CUDA si están disponibles
@@ -63,7 +63,11 @@ class BinaryFeatureExtractor(nn.Module):
             p.requires_grad_(False)
         self.eval()
         self.tanh = nn.Tanh()
-        self.sign = torch.sign
+        self.sign = self.customSign  
+          
+    def customSign(self, x):
+     """Custom sign function that maps 0 to 1."""
+     return torch.where(x > 0, torch.tensor(1, device=x.device, dtype=torch.uint8), torch.tensor(0, device=x.device, dtype=torch.uint8))
     
     """
     Forward pass through the model and layers to obtain binary features.
@@ -94,20 +98,16 @@ elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
   device = 'mps'
 
 model = BinaryFeatureExtractor(model_name='clip-ViT-B-32', num_of_hidden_layers=2, device=device)
+
+
 binaryVector1 = model.forward(Image.open('./src/twoDogsInSnow.jpeg'))
-vec1 = binaryVector1.detach().cpu().numpy()
-string1 = ''.join(['1' if i > 0 else '0' for i in vec1])
-
 binaryVector2 = model.forward(Image.open('./src/dogsInSnow.jpeg'))
-vec2 = binaryVector2.detach().cpu().numpy()
-string2 = ''.join(['1' if i > 0 else '0' for i in vec2])
 
-
-bitarray1 = bitarray.bitarray(string1)
-bitarray2 = bitarray.bitarray(string2)
+bitarray1 = bitarray.bitarray(binaryVector1.tolist())
+bitarray2 = bitarray.bitarray(binaryVector2.tolist())
+    
 hamming_distance = (bitarray1 ^ bitarray2).count()
 print(f'Hamming Distance between binary features: {hamming_distance}\n')
 
-
-print(string1 + '\n' + '\n')   
-print(string2)
+print(bitarray1.to01() + '\n' + '\n')   
+print(bitarray2.to01())
