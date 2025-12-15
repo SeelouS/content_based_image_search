@@ -90,24 +90,3 @@ class BinaryFeatureExtractor(nn.Module):
             x = self.tanh(x)
         x = self.sign(x)
         return x
-
-device = 'cpu'     
-if torch.cuda.is_available():
-  device = 'cuda'
-elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
-  device = 'mps'
-
-model = BinaryFeatureExtractor(model_name='clip-ViT-B-32', num_of_hidden_layers=2, device=device)
-
-
-binaryVector1 = model.forward(Image.open('./src/twoDogsInSnow.jpeg'))
-binaryVector2 = model.forward(Image.open('./src/dogsInSnow.jpeg'))
-
-bitarray1 = bitarray.bitarray(binaryVector1.tolist())
-bitarray2 = bitarray.bitarray(binaryVector2.tolist())
-    
-hamming_distance = (bitarray1 ^ bitarray2).count()
-print(f'Hamming Distance between binary features: {hamming_distance}\n')
-
-print(bitarray1.to01() + '\n' + '\n')   
-print(bitarray2.to01())
