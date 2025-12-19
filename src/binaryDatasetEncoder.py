@@ -5,9 +5,9 @@ from binaryFeatureExtractor import BinaryFeatureExtractor
 
 def main():
     # --- Configuration ---
-    weights_path = "./artifacts/secondOutput/binary_extractor.pt"
+    weights_path = "./artifacts/thirdOutput/binary_extractor.pt"
     json_path = "./clip_labels.json"
-    output_path = "./binary_results.json"
+    output_path = "./binaryEmbeddings/thirdOutput/binary_results.json"
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # 1. Load the checkpoint to get config and weights
@@ -44,17 +44,10 @@ def main():
             clip_emb = F.normalize(clip_emb, dim=0).unsqueeze(0)
 
             # Pass through the trained hidden layers manually 
-            # (We don't use model.forward() because it expects an Image, not an embedding)
-            x = clip_emb
-            for layer in model.hidden_layers:
-                x = layer(x)
-                x = model.tanh(x)
-            
-            # Apply the sign function to binarize (0 or 1)
-            binary_tensor = model.sign(x).squeeze(0)
-            
+            x = model.forward_clip_embedding(clip_emb)
+             
             # Convert to list for JSON storage
-            binary_list = binary_tensor.cpu().numpy().tolist()
+            binary_list = x.squeeze(0).cpu().numpy().tolist()
 
             results.append({
                 "image": img_name,

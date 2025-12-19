@@ -1,0 +1,133 @@
+---
+title: "Artifacts Specs"
+output:
+  html_document:
+    mathjax: default
+---
+
+
+<br><br>
+<u>**Output 1:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** default
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** default
+ 
+  - **Weight decay:** default
+ 
+  - **Regularization weight:** default
+  
+  - **Similarity function:** cosine_similarity
+
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
+<br><br>
+<u>**Output 2:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** 1e-4
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** 20
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** 0.02
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
+<br><br>
+<u>**Output 3:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** 1e-4
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** default
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** default
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
+<br><br>
+<u>**Output 4:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** default
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** 20
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** default
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
+<br><br>
+<u>**Output 5:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** default
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** default
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** 0.02
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
