@@ -5,9 +5,9 @@ from binaryFeatureExtractor import BinaryFeatureExtractor
 
 def main():
     # --- Configuration ---
-    weights_path = "./artifacts/fifthOutput/binary_extractor.pt"
+    weights_path = "./artifacts/twelfthOutput/binaryExtractor.pt"
     json_path = "./clip_labels.json"
-    output_path = "./binaryEmbeddings/fifthOutput/binary_results.json"
+    output_path = "./binaryEmbeddings/twelfthOutput/binary_results.json"
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # 1. Load the checkpoint to get config and weights
