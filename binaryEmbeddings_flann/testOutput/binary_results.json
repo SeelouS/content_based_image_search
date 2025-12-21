@@ -1,0 +1,103 @@
+{
+  "ids": [
+    "img1",
+    "img2",
+    "img3",
+    "img4"
+  ],
+  "embeddings": [
+    [
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ]
+  ],
+  "meta": {
+    "img1": {},
+    "img2": {},
+    "img3": {},
+    "img4": {}
+  },
+  "results": {
+    "img1": [
+      {
+        "id": "img2",
+        "distance": 0.2
+      },
+      {
+        "id": "img4",
+        "distance": 0.2
+      },
+      {
+        "id": "img3",
+        "distance": 0.6
+      }
+    ],
+    "img2": [
+      {
+        "id": "img1",
+        "distance": 0.2
+      },
+      {
+        "id": "img4",
+        "distance": 0.4
+      },
+      {
+        "id": "img3",
+        "distance": 0.8
+      }
+    ],
+    "img3": [
+      {
+        "id": "img1",
+        "distance": 0.6
+      },
+      {
+        "id": "img2",
+        "distance": 0.8
+      },
+      {
+        "id": "img4",
+        "distance": 0.8
+      }
+    ],
+    "img4": [
+      {
+        "id": "img1",
+        "distance": 0.2
+      },
+      {
+        "id": "img2",
+        "distance": 0.4
+      },
+      {
+        "id": "img3",
+        "distance": 0.8
+      }
+    ]
+  },
+  "meta_source_file": "binary_results.json"
+}

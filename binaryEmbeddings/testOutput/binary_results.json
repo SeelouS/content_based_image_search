@@ -1,0 +1,6 @@
+[
+  {"id": "img1", "embedding": [0, 0, 0, 0, 1]},
+  {"id": "img2", "embedding": [0, 1, 0, 0, 1]},
+  {"id": "img3", "embedding": [1, 0, 1, 0, 0]},
+  {"id": "img4", "embedding": [0, 0, 0, 1, 1]}
+]

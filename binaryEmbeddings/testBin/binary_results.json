@@ -1,0 +1,6 @@
+[
+  {"image": "img1.jpg", "category_id": 1, "binary_embedding": [0,0,0,0,1]},
+  {"image": "img2.jpg", "category_id": 1, "binary_embedding": [0,1,0,0,1]},
+  {"image": "img3.jpg", "category_id": 2, "binary_embedding": [1,0,1,0,0]},
+  {"image": "img4.jpg", "category_id": 2, "binary_embedding": [0,0,0,1,1]}
+]

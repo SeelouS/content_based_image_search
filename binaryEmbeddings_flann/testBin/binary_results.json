@@ -1,0 +1,115 @@
+{
+  "ids": [
+    "img1.jpg",
+    "img2.jpg",
+    "img3.jpg",
+    "img4.jpg"
+  ],
+  "embeddings": [
+    [
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ]
+  ],
+  "meta": {
+    "img1.jpg": {
+      "image": "img1.jpg",
+      "category_id": 1
+    },
+    "img2.jpg": {
+      "image": "img2.jpg",
+      "category_id": 1
+    },
+    "img3.jpg": {
+      "image": "img3.jpg",
+      "category_id": 2
+    },
+    "img4.jpg": {
+      "image": "img4.jpg",
+      "category_id": 2
+    }
+  },
+  "results": {
+    "img1.jpg": [
+      {
+        "id": "img2.jpg",
+        "distance": 0.2
+      },
+      {
+        "id": "img4.jpg",
+        "distance": 0.2
+      },
+      {
+        "id": "img3.jpg",
+        "distance": 0.6
+      }
+    ],
+    "img2.jpg": [
+      {
+        "id": "img1.jpg",
+        "distance": 0.2
+      },
+      {
+        "id": "img4.jpg",
+        "distance": 0.4
+      },
+      {
+        "id": "img3.jpg",
+        "distance": 0.8
+      }
+    ],
+    "img3.jpg": [
+      {
+        "id": "img1.jpg",
+        "distance": 0.6
+      },
+      {
+        "id": "img2.jpg",
+        "distance": 0.8
+      },
+      {
+        "id": "img4.jpg",
+        "distance": 0.8
+      }
+    ],
+    "img4.jpg": [
+      {
+        "id": "img1.jpg",
+        "distance": 0.2
+      },
+      {
+        "id": "img2.jpg",
+        "distance": 0.4
+      },
+      {
+        "id": "img3.jpg",
+        "distance": 0.8
+      }
+    ]
+  },
+  "meta_source_file": "binary_results.json"
+}
