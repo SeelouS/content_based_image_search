@@ -1,2 +1,6 @@
 ./images/
 images/
+
+./clip_labels.json
+./clip_labels.jsonl
+.DS_Store

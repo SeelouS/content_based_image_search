@@ -90,3 +90,16 @@ class BinaryFeatureExtractor(nn.Module):
             x = self.tanh(x)
         x = self.sign(x)
         return x
+    
+    def forward_clip_embedding(self, clip_emb):
+        """
+        Forward pass that accepts pre-computed CLIP embeddings directly.
+        Processes the embeddings through the defined fully connected layers
+        with Tanh activations, and finally applies the Sign activation to produce binary outputs.
+        """
+        x = clip_emb
+        for layer in self.hidden_layers:
+            x = layer(x)
+            x = self.tanh(x)
+        x = self.sign(x)
+        return x    
