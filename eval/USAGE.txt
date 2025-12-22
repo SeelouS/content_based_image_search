@@ -1,0 +1,89 @@
+Guía de uso: evaluación de embeddings (CLIP y binarios)
+
+1) Objetivo
+- Evaluar mAP en GPR1200 usando `eval/evaluate.py` con embeddings en formatos JSON/PKL/NPY.
+- Convertir archivos a un formato NumPy limpio (N,D) con `src/normalize_evalfile.py`.
+
+2) Requisitos
+- Datos: carpeta de imágenes `./images/` (GPR1200) accesible.
+- Embeddings: 
+  - CLIP (float): típicamente en `./clipLabels/clip_labels.json`.
+  - Binarios (0/1): generados en `./binaryEmbeddings/<output>/binary_results.json`.
+
+3) Conversión recomendada a .npy (rápido y estable)
+- CLIP embeddings:
+  zsh:
+    python ./src/normalize_evalfile.py \
+      --in ./clipLabels/clip_labels.json \
+      --out ./clipLabels/clip_labels.npy \
+      --ids-out ./clipLabels/clip_labels_ids.txt \
+      --npz-out ./clipLabels/clip_labels.npz
+
+- Binarios (ejemplo con secondOutput):
+  zsh:
+    python ./src/normalize_evalfile.py \
+      --in ./binaryEmbeddings/secondOutput/binary_results.json \
+      --out ./binaryEmbeddings/secondOutput/binary_results.npy \
+      --ids-out ./binaryEmbeddings/secondOutput/ids.txt \
+      --npz-out ./binaryEmbeddings/secondOutput/binary_results.npz
+
+Notas:
+- El normalizador soporta JSON/JSONL/PKL y fuerza salida float32 (N,D).
+- Si un JSON está vacío o con vectores de diferente longitud, fallará con un mensaje claro.
+
+4) Evaluación con evaluate.py
+- CLIP (float) baseline:
+  zsh:
+    python ./eval/evaluate.py \
+      --evalfile-path './clipLabels/clip_labels.npy' \
+      --mode 'embeddings' \
+      --dataset-path './images/'
+
+- Binarios (0/1) convertidos a .npy:
+  zsh:
+    python ./eval/evaluate.py \
+      --evalfile-path './binaryEmbeddings/secondOutput/binary_results.npy' \
+      --mode 'embeddings' \
+      --dataset-path './images/'
+
+- También acepta `.pkl`:
+  zsh:
+    python ./eval/evaluate.py \
+      --evalfile-path './binaryEmbeddings/secondOutput/binary_results.pkl' \
+      --mode 'embeddings' \
+      --dataset-path './images/'
+
+5) Cómo funcionan los binarios (0/1)
+- Evaluación actual usa similitud de coseno con tensores float32.
+- Los binarios se convierten a float32; coseno sobre 0/1 funciona, pero no es Hamming.
+- Para ranking basado en Hamming, usa `src/apply_flann.py` (métrica 'auto'/'hamming') y luego analiza resultados; para mAP aquí, mantén coseno.
+
+6) Conversión masiva a PKL (opcional)
+- Si necesitas `.pkl` en el mismo sitio que `.json`:
+  zsh:
+    python ./src/json_to_pickle.py --dir ./binaryEmbeddings
+  - Crea `archivo.pkl` junto al `archivo.json`.
+  - Evita archivos vacíos; si el `.json` está vacío, se omite con aviso.
+
+7) Consejos y solución de problemas
+- Verifica formas: espera `(N, D)` con `D=512` normalmente.
+  zsh:
+    python - <<'PY'
+    import numpy as np; a=np.load('clipLabels/clip_labels.npy'); print(a.shape, a.dtype)
+    PY
+- Si `evaluate.py` muestra dtype=object, normaliza antes con `normalize_evalfile.py`.
+- Si el archivo está vacío (N=0), revisa el origen (generación previa) y vuelve a exportar.
+
+8) Ejemplo de comparación
+- Evalúa CLIP (float) y binarios para medir la brecha:
+  zsh:
+    python ./eval/evaluate.py --evalfile-path './clipLabels/clip_labels.npy' --mode embeddings --dataset-path './images/'
+    python ./eval/evaluate.py --evalfile-path './binaryEmbeddings/secondOutput/binary_results.npy' --mode embeddings --dataset-path './images/'
+
+9) Índices ANN (opcional)
+- Para vecinos más rápidos (no mAP directo), usa:
+  zsh:
+    python ./src/apply_flann.py --metric auto --input-dir ./binaryEmbeddings --output-dir ./binaryEmbeddings_flann
+- `auto`: hamming si detecta binario; euclidean si float.
+
+Fin.

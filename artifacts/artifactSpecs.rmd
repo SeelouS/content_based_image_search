@@ -303,3 +303,80 @@ output:
   
   - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
 
+<<<<<<< HEAD
+=======
+
+
+
+<br><br>
+<u>**Output 13:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** 2e-5
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** 20
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** 0.05
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
+<br><br>
+<u>**Output 14:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** 2e-5
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** 20
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** 0.02
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+
+
+
+
+<br><br>
+<u>**Output 15:**</u>
+<br>
+
+  - **Clip model used:** default
+  
+  - **Learning rate:** 2e-5
+  
+  - **Hidden layers:** default
+  
+  - **Batch size:** default
+  
+  - **Epochs:** 10
+  
+  - **Weight decay:** default
+  
+  - **Regularization weight:** 0.05
+  
+  - **Similarity function:** cosine_similarity
+  
+  - **Reg. type:** $$ R(X) = \frac{1}{BD}\sum_{b=1}^{B}\sum_{j=1}^{D} -\log\big(\max(|X_{b,j}|,\,\varepsilon)\big) $$
+>>>>>>> a364091 (fix commit)
