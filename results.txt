@@ -1,0 +1,141 @@
+Model 1
+
+GPR1200 mAP: 0.283
+Landmarks: 0.2672, IMSketch: 0.2167, iNat: 0.2936, Instre: 0.2437, SOP: 0.2785, faces: 0.3983
+
+
+
+
+Model 2
+
+---------Results:
+GPR1200 mAP: 0.5528
+Landmarks: 0.6058, IMSketch: 0.36, iNat: 0.5432, Instre: 0.4714, SOP: 0.5768, faces: 0.7598
+
+
+
+
+Model 3
+
+---------Results:
+GPR1200 mAP: 0.2678
+Landmarks: 0.2213, IMSketch: 0.19, iNat: 0.2754, Instre: 0.2463, SOP: 0.2778, faces: 0.3962
+
+
+
+
+Model 4
+
+---------Results:
+GPR1200 mAP: 0.3187
+Landmarks: 0.287, IMSketch: 0.2348, iNat: 0.3457, Instre: 0.2547, SOP: 0.3145, faces: 0.4756
+
+
+
+
+Model 5
+
+---------Results:
+GPR1200 mAP: 0.5453
+Landmarks: 0.5836, IMSketch: 0.3585, iNat: 0.5366, Instre: 0.4617, SOP: 0.5799, faces: 0.7515
+
+
+
+
+Model 6
+
+GPR1200 mAP: 0.3755
+Landmarks: 0.3014, IMSketch: 0.2657, iNat: 0.3979, Instre: 0.3238, SOP: 0.3992, faces: 0.5648
+
+
+
+
+Model 7
+
+---------Results:
+GPR1200 mAP: 0.4876
+Landmarks: 0.5035, IMSketch: 0.3167, iNat: 0.4942, Instre: 0.4072, SOP: 0.5087, faces: 0.6955
+
+
+
+
+Model 8
+
+---------Results:
+GPR1200 mAP: 0.5562
+Landmarks: 0.6017, IMSketch: 0.3603, iNat: 0.5453, Instre: 0.4852, SOP: 0.5767, faces: 0.7681
+
+
+
+
+Model 9
+
+---------Results:
+GPR1200 mAP: 0.4359
+Landmarks: 0.4165, IMSketch: 0.2942, iNat: 0.458, Instre: 0.354, SOP: 0.4386, faces: 0.6543
+
+
+
+
+Model 10
+
+---------Results:
+GPR1200 mAP: 0.4685
+Landmarks: 0.4825, IMSketch: 0.3156, iNat: 0.4844, Instre: 0.3769, SOP: 0.4764, faces: 0.6751
+
+
+
+
+Model 11
+
+---------Results:
+GPR1200 mAP: 0.3777
+Landmarks: 0.3242, IMSketch: 0.2691, iNat: 0.4001, Instre: 0.3288, SOP: 0.3912, faces: 0.553
+
+
+
+
+Model 12
+
+---------Results:
+GPR1200 mAP: 0.4612
+Landmarks: 0.452, IMSketch: 0.3116, iNat: 0.4747, Instre: 0.3841, SOP: 0.472, faces: 0.6729
+
+
+
+
+Model 13
+
+---------Results:
+GPR1200 mAP: 0.3682
+Landmarks: 0.3099, IMSketch: 0.2529, iNat: 0.3716, Instre: 0.3165, SOP: 0.3967, faces: 0.5612
+
+
+
+
+Model 14
+
+---------Results:
+GPR1200 mAP: 0.4963
+Landmarks: 0.5174, IMSketch: 0.3229, iNat: 0.5037, Instre: 0.4199, SOP: 0.5117, faces: 0.702
+
+
+
+
+Model 15
+
+---------Results:
+GPR1200 mAP: 0.4019
+Landmarks: 0.3933, IMSketch: 0.2714, iNat: 0.4038, Instre: 0.3448, SOP: 0.4036, faces: 0.5947
+
+
+
+
+Clip -B-32
+
+
+
+
+
+
+
