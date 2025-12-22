@@ -105,11 +105,34 @@ def main():
     logger.info(f"Loading dataset from {dataset_file}")
     ids, mat, meta, is_binary = load_json_embeddings(dataset_file)
 
-    logger.info(f"Loading model from {args.weights} on device {device}")
-    model = load_model(args.weights, device=device)
+    # Support special mode: if --weights looks like a CLIP model name (e.g. 'clip-ViT-B-32') and
+    # there is no file at that path, use the CLIP encoder directly to compute a float embedding
+    # for the query and search the dataset with it.
+    weights_arg = args.weights or ""
+    q_vec = None
+    if weights_arg and (not os.path.exists(weights_arg)) and weights_arg.lower().startswith("clip"):
+        logger.info(f"Using CLIP encoder '{weights_arg}' to compute query embedding on device {device}")
+        try:
+            from sentence_transformers import SentenceTransformer
+        except Exception:
+            logger.error("sentence-transformers is required to use CLIP encoder. Install it with: pip install sentence-transformers")
+            return
+        clip_model = SentenceTransformer(weights_arg)
+        try:
+            clip_emb = clip_model.encode(Image.open(args.query).convert('RGB'), convert_to_tensor=False, device=device)
+        except TypeError:
+            clip_emb = clip_model.encode(Image.open(args.query).convert('RGB'), convert_to_tensor=False)
+        q_vec = np.asarray(clip_emb, dtype=np.float32).reshape(-1)
+        # If dataset contains binary embeddings, they are incompatible with CLIP float embeddings
+        if is_binary:
+            logger.error("Dataset contains binary embeddings; CLIP float embeddings cannot be compared to binary dataset. Use a CLIP embeddings dataset or use the binary extractor instead.")
+            return
+    else:
+        logger.info(f"Loading model from {args.weights} on device {device}")
+        model = load_model(args.weights, device=device)
 
-    logger.info(f"Computing query embedding for {args.query}")
-    q_vec = compute_query_embedding(model, args.query, device=device)
+        logger.info(f"Computing query embedding for {args.query}")
+        q_vec = compute_query_embedding(model, args.query, device=device)
 
     # Enforce a minimum of 3 results (so user gets multiple suggestions)
     effective_k = max(n_images_to_return, int(args.k))

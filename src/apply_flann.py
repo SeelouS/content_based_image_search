@@ -28,15 +28,13 @@ HAS_TQDM = True
 # Try to import FLANN first, then sklearn, otherwise fallback to brute force
 USE_FLANN = False
 USE_SKLEARN = False
-try:
-    from pyflann import FLANN
-    USE_FLANN = True
-except Exception:
-    try:
-        from sklearn.neighbors import NearestNeighbors
-        USE_SKLEARN = True
-    except Exception:
-        USE_SKLEARN = False
+
+import faiss
+USE_FLANN = True
+
+from sklearn.neighbors import NearestNeighbors
+USE_SKLEARN = True
+
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -94,7 +92,7 @@ def load_json_embeddings(path: str) -> Tuple[List[str], np.ndarray, Dict[str, Di
             for i, item in enumerate(data):
                 identifier = item.get("id") or item.get("image") or item.get("image_id") or str(i)
                 # Try known embedding fields
-                vec = item.get("embedding") or item.get("vec") or item.get("features") or item.get("binary_embedding")
+                vec = item.get("clip_embedding") or item.get("vec") or item.get("features") or item.get("binary_embedding")
                 if vec is None:
                     continue
                 ids.append(str(identifier))
@@ -188,18 +186,43 @@ def apply_flann_to_matrix(ids: List[str], mat: np.ndarray, k: int = 10, metric: 
     else:
         # Euclidean or other numeric distances
         if USE_FLANN and metric_used == "euclidean":
-            flann = FLANN()
-            indices, dists = flann.nn_index(mat, k_query)
+
+            # FAISS requiere float32
+            mat32 = mat.astype(np.float32)
+
+            # Dimensión de los vectores
+            dim = mat32.shape[1]
+
+            # IndexFlatL2 = distancia euclídea exacta
+            index = faiss.IndexFlatL2(dim)
+
+            # Añadir todos los vectores al índice
+            index.add(mat32)
+
+            # Búsqueda k-NN
+            dists, indices = index.search(mat32, k_query)
+
+            # Construcción del resultado igual que antes
             for i, qid in enumerate(ids):
                 neighs = []
                 for idx, dist in zip(indices[i], dists[i]):
+
+                    # Evitar el propio punto
                     if int(idx) == i:
                         continue
-                    neighs.append({"id": ids[int(idx)], "distance": float(dist)})
+
+                    neighs.append({
+                        "id": ids[int(idx)],
+                        "distance": float(dist)
+                    })
+
                     if len(neighs) >= k:
                         break
+
                 results[qid] = neighs
+
             return results
+
         elif USE_SKLEARN:
             nn = NearestNeighbors(n_neighbors=k_query, algorithm='auto', metric='euclidean', n_jobs=-1)
             nn.fit(mat)
