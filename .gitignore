@@ -6,3 +6,4 @@ images/
 .DS_Store
 .venv/
 venv/
+binaryEmbeddings_flann/clip_labels.json
