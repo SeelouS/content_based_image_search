@@ -24,6 +24,9 @@ import numpy as np
 import torch
 import time
 
+# Ruta robusta a la carpeta de imágenes, relativa al proyecto
+IMAGE_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "images"))
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("miniapp")
 
@@ -145,8 +148,9 @@ class MiniApp(tk.Tk):
             return
         idx = int(sel[0])
         iid = self.ids[idx]
-        imgpath = self.meta.get(iid, {}).get('image') or iid
-        imgpath = "..\\images\\" + imgpath
+        imgPath = self.meta.get(iid, {}).get('image') or iid
+        imgpath = os.path.join(IMAGE_PATH, imgPath)
+        
         if not os.path.exists(imgpath):
             messagebox.showerror("Error", f"Image file not found: {imgpath}")
             return
@@ -204,7 +208,7 @@ class MiniApp(tk.Tk):
         idx = int(sel[0])
         iid = self.ids[idx]
         imgpath = self.meta.get(iid, {}).get('image') or iid
-        imgpath = "..\\images\\" + imgpath
+        imgpath = os.path.join(IMAGE_PATH, imgpath)
         if os.path.exists(imgpath):
             try:
                 os.startfile(imgpath)
@@ -220,7 +224,7 @@ class MiniApp(tk.Tk):
         idx = int(sel[0])
         iid = self.current_results[idx][0]
         imgpath = self.meta.get(iid, {}).get('image') or iid
-        imgpath = "..\\images\\" + imgpath
+        imgpath = os.path.join(IMAGE_PATH, imgpath)
         if os.path.exists(imgpath):
             try:
                 os.startfile(imgpath)

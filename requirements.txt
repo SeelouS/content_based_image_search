@@ -3,6 +3,7 @@ numpy
 sentence-transformers
 torch
 bitarray
-pyflann
+faiss-cpu
 scikit-learn
 tqdm
+tk
