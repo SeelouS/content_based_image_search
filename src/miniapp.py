@@ -11,7 +11,7 @@ Behavior:
 - Browse/select an image file to query
 - Or select an image from the dataset list to use as query
 - View top-k results and open result images with the OS default image viewer
-
+- You should have the images accessible at ../images/<image_name> relative to the app's working directory.
 """
 from __future__ import annotations
 import argparse
