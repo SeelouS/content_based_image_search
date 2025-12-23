@@ -146,7 +146,7 @@ class MiniApp(tk.Tk):
         idx = int(sel[0])
         iid = self.ids[idx]
         imgpath = self.meta.get(iid, {}).get('image') or iid
-        imgpath = "C:\\Users\\gonza\\Documents\\Uni\\tercero\\Computer Vision\\final_proyect\\GPR1200\\images\\" + imgpath
+        imgpath = "..\\images\\" + imgpath
         if not os.path.exists(imgpath):
             messagebox.showerror("Error", f"Image file not found: {imgpath}")
             return
@@ -204,7 +204,7 @@ class MiniApp(tk.Tk):
         idx = int(sel[0])
         iid = self.ids[idx]
         imgpath = self.meta.get(iid, {}).get('image') or iid
-        imgpath = "C:\\Users\\gonza\\Documents\\Uni\\tercero\\Computer Vision\\final_proyect\\GPR1200\\images\\" + imgpath
+        imgpath = "..\\images\\" + imgpath
         if os.path.exists(imgpath):
             try:
                 os.startfile(imgpath)
@@ -220,7 +220,7 @@ class MiniApp(tk.Tk):
         idx = int(sel[0])
         iid = self.current_results[idx][0]
         imgpath = self.meta.get(iid, {}).get('image') or iid
-        imgpath = "C:\\Users\\gonza\\Documents\\Uni\\tercero\\Computer Vision\\final_proyect\\GPR1200\\images\\" + imgpath
+        imgpath = "..\\images\\" + imgpath
         if os.path.exists(imgpath):
             try:
                 os.startfile(imgpath)
