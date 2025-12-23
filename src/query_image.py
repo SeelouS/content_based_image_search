@@ -17,7 +17,7 @@ from PIL import Image
 
 # Import internal modules (must run from project root with venv active)
 try:
-    from src.apply_flann import load_json_embeddings
+    from src.apply_Indexer import load_json_embeddings
     from src.binaryFeatureExtractor import BinaryFeatureExtractor
 except Exception as exc:
     raise ImportError(

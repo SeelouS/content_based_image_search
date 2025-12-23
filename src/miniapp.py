@@ -1,16 +1,16 @@
 """Mini GUI app to query images using existing embeddings and extractors.
 
 Usage:
-  python -m src.miniapp --dataset binaryEmbeddings_flann/your.json --weights artifacts/twelfthOutput/binaryExtractor.pt --k 5 --metric auto
+python -m src.miniapp --dataset binaryEmbeddings_faiss/your.json --weights artifacts/twelfthOutput/binaryExtractor.pt --k 5 --metric auto
 
 Behavior:
 - Loads dataset embeddings via `load_json_embeddings`.
 - If `--weights` is a CLIP model name (starts with 'clip' and not an existing file), the app uses SentenceTransformer to compute float CLIP embeddings for queries.
 - Otherwise it loads the project's BinaryFeatureExtractor checkpoint and uses it to compute binary embeddings.
 - GUI lets you:
-  - Browse/select an image file to query
-  - Or select an image from the dataset list to use as query
-  - View top-k results and open result images with the OS default image viewer
+- Browse/select an image file to query
+- Or select an image from the dataset list to use as query
+- View top-k results and open result images with the OS default image viewer
 
 """
 from __future__ import annotations
@@ -22,15 +22,15 @@ from tkinter import ttk, filedialog, messagebox
 from PIL import Image, ImageTk
 import numpy as np
 import torch
+import time
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("miniapp")
 
 # Import project utilities
 try:
-    from src.apply_flann import load_json_embeddings
+    from src.apply_Indexer import load_json_embeddings
     from src.query_image import load_model, compute_query_embedding, topk_by_distance
-    from src.binaryFeatureExtractor import BinaryFeatureExtractor
 except Exception as exc:
     raise ImportError("Could not import project modules. Run the app from project root with your venv active.") from exc
 
@@ -92,6 +92,9 @@ class MiniApp(tk.Tk):
         self.results_list = tk.Listbox(mid, width=60, height=20)
         self.results_list.pack(fill=tk.BOTH, expand=True)
         self.results_list.bind('<Double-Button-1>', self.open_result_image)
+        
+        self.time_label = ttk.Label(right, text="Query time: 0.00 seconds")
+        self.time_label.pack(pady=8)
 
         # Right: settings and actions
         ttk.Label(right, text="Settings").pack()
@@ -163,6 +166,8 @@ class MiniApp(tk.Tk):
         if not self.query_path:
             messagebox.showinfo("Info", "Select or browse a query image first")
             return
+        start_time = time.time()
+        
         try:
             if self.clip_mode:
                 emb = self.clip_model.encode(Image.open(self.query_path).convert('RGB'), convert_to_tensor=False)
@@ -180,6 +185,11 @@ class MiniApp(tk.Tk):
             messagebox.showerror("Error", f"Failed to search: {e}")
             return
 
+        end_time = time.time()  # Captura el tiempo después de que se muestran los resultados
+        elapsed_time = end_time - start_time  # Calcula el tiempo transcurrido
+
+        # Muestra el tiempo transcurrido en el label
+        self.time_label.config(text=f"Query time: {elapsed_time:.2f} seconds")
         # display results
         self.results_list.delete(0, tk.END)
         self.current_results = results

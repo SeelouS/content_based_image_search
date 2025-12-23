@@ -1,16 +1,16 @@
-"""Apply FLANN retrieval to JSON embeddings in a directory tree.
+"""Apply FAISS retrieval to JSON embeddings in a directory tree.
 
 Behavior:
 - For each JSON file under an input directory (default: `binaryEmbeddings`),
   try to parse embeddings in a few common formats and build an index.
 - For each embedding (treated as a query), find the top-k nearest neighbors
   among the same file's embeddings (excluding itself) and write a JSON
-  file with rankings under the output directory (default: `binaryEmbeddings_flann`).
+  file with rankings under the output directory (default: `indexedBinaryEmbeddings`).
 
 Usage:
-    python -m src.apply_flann --input-dir binaryEmbeddings --output-dir binaryEmbeddings_flann --k 10
+    python -m src.apply_index --input-dir binaryEmbeddings --output-dir indexedBinaryEmbeddings --k 10
 
-The script prefers `pyflann` (FLANN) if installed; otherwise it falls back to scikit-learn's NearestNeighbors.
+The script prefers `faiss` if installed; otherwise it falls back to scikit-learn's NearestNeighbors.
 """
 
 from __future__ import annotations
@@ -25,12 +25,12 @@ import numpy as np
 from tqdm import tqdm
 HAS_TQDM = True
 
-# Try to import FLANN first, then sklearn, otherwise fallback to brute force
-USE_FLANN = False
+# Try to import FAISS first, then sklearn, otherwise fallback to brute force
+USE_FAISS = False
 USE_SKLEARN = False
 
 import faiss
-USE_FLANN = True
+USE_FAISS = True
 
 from sklearn.neighbors import NearestNeighbors
 USE_SKLEARN = True
@@ -125,13 +125,13 @@ def load_json_embeddings(path: str) -> Tuple[List[str], np.ndarray, Dict[str, Di
     return ids, mat, meta, is_binary
 
 
-def apply_flann_to_matrix(ids: List[str], mat: np.ndarray, k: int = 10, metric: str = "euclidean", is_binary: bool = False, batch_size: int = 256) -> Dict[str, List[Dict[str, Any]]]:
+def apply_faiss_to_matrix(ids: List[str], mat: np.ndarray, k: int = 10, metric: str = "euclidean", is_binary: bool = False, batch_size: int = 256) -> Dict[str, List[Dict[str, Any]]]:
     n = mat.shape[0]
     if n == 0:
         return {}
     k_query = min(k + 1, n)  # +1 because we'll drop self if present
 
-    logger.info(f"Indexing {n} vectors (dim={mat.shape[1]}) using metric={metric} (pyflann={USE_FLANN}, sklearn={USE_SKLEARN}), batch_size={batch_size}")
+    logger.info(f"Indexing {n} vectors (dim={mat.shape[1]}) using metric={metric} (faiss={USE_FAISS}, sklearn={USE_SKLEARN}), batch_size={batch_size}")
 
     # If metric is 'auto' and embeddings are binary, prefer hamming
     if metric == "auto":
@@ -185,7 +185,7 @@ def apply_flann_to_matrix(ids: List[str], mat: np.ndarray, k: int = 10, metric: 
             return results
     else:
         # Euclidean or other numeric distances
-        if USE_FLANN and metric_used == "euclidean":
+        if USE_FAISS and metric_used == "euclidean":
 
             # FAISS requiere float32
             mat32 = mat.astype(np.float32)
@@ -277,7 +277,7 @@ def process_file(inpath: str, outpath: str, k: int = 10, metric: str = "auto", b
     else:
         embeddings_list = mat.tolist()
 
-    results = apply_flann_to_matrix(ids, mat, k=k, metric=metric, is_binary=is_binary, batch_size=batch_size)
+    results = apply_faiss_to_matrix(ids, mat, k=k, metric=metric, is_binary=is_binary, batch_size=batch_size)
 
     # If the user wants a simple annotated list with fields ordered, build it
     if output_format == "annotated_list":
@@ -374,9 +374,9 @@ def walk_and_process(input_dir: str, output_dir: str, k: int = 10, metric: str =
 
 
 def parse_args():
-    p = argparse.ArgumentParser(description="Apply FLANN retrieval to JSON embedding files")
+    p = argparse.ArgumentParser(description="Apply FAISS retrieval to JSON embedding files")
     p.add_argument("--input-dir", default="binaryEmbeddings", help="Input directory containing embedding JSONs")
-    p.add_argument("--output-dir", default="binaryEmbeddings_flann", help="Output directory to write ranked JSONs")
+    p.add_argument("--output-dir", default="binaryEmbeddings_faiss", help="Output directory to write ranked JSONs")
     p.add_argument("--k", type=int, default=10, help="Number of neighbors to keep per query")
     p.add_argument("--metric", choices=["auto", "euclidean", "hamming"], default="auto", help="Distance metric to use (auto detects binary embeddings)")
     p.add_argument("--batch-size", type=int, default=256, help="Batch size for brute-force computation (memory/speed tradeoff)")
