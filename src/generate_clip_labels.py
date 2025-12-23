@@ -8,14 +8,14 @@ from tqdm import tqdm
 # ----------------------------
 # Configuración
 # ----------------------------
-IMAGES_DIR = "../GPR1200/images"
-OUTPUT_FILE = "clip_labels.json"
+IMAGES_DIR = "./images"
+OUTPUT_FILE = "clip_labels_16.json"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # ----------------------------
 # Cargar CLIP
 # ----------------------------
-model, preprocess = clip.load("ViT-B/32", device=DEVICE)
+model, preprocess = clip.load("ViT-B/16", device=DEVICE)
 model.eval()
 
 results = []

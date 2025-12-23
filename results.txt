@@ -133,9 +133,15 @@ Landmarks: 0.3933, IMSketch: 0.2714, iNat: 0.4038, Instre: 0.3448, SOP: 0.4036, 
 
 Clip -B-32
 
+---------Results:
+GPR1200 mAP: 0.6283
+Landmarks: 0.6836, IMSketch: 0.4042, iNat: 0.5976, Instre: 0.5543, SOP: 0.6901, faces: 0.8403
 
 
 
 
+Clip -B-16
 
-
+---------Results:
+GPR1200 mAP: 0.6862
+Landmarks: 0.7529, IMSketch: 0.4533, iNat: 0.6359, Instre: 0.6396, SOP: 0.7669, faces: 0.8688
