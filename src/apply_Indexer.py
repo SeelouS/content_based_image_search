@@ -8,7 +8,7 @@ Behavior:
   file with rankings under the output directory (default: `indexedBinaryEmbeddings`).
 
 Usage:
-    python -m src.apply_index --input-dir binaryEmbeddings --output-dir indexedBinaryEmbeddings --k 10
+    python -m src.apply_Indexer --input-dir binaryEmbeddings --output-dir indexedBinaryEmbeddings --k 10
 
 The script prefers `faiss` if installed; otherwise it falls back to scikit-learn's NearestNeighbors.
 """
